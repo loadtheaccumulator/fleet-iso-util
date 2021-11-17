@@ -2,7 +2,7 @@
 # STEP 1 build executable binary
 ############################
 #FROM registry.redhat.io/rhel8/go-toolset:1.15 AS builder
-FROM registry.redhat.io/ubi8
+FROM registry.access.redhat.com/ubi8
 
 COPY fleetkick.sh .
 #COPY kickstart-stage.ks .
