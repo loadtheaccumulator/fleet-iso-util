@@ -1,10 +1,7 @@
-############################
-# STEP 1 build executable binary
-############################
-#FROM registry.redhat.io/rhel8/go-toolset:1.15 AS builder
+# RHEL container version
 FROM registry.redhat.io/ubi8
 
-COPY fleetkick.sh .
+COPY fleetkick.sh /usr/local/bin/
 #COPY kickstart-stage.ks .
 
 # Fetch dependencies.
@@ -14,4 +11,4 @@ ENV MTOOLS_SKIP_CHECK=1
 
 USER 1001
 
-#CMD ["edge-api"]
+CMD ["/usr/local/bin/fleetkick.sh"]
