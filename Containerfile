@@ -1,5 +1,5 @@
 # RHEL container version
-FROM registry.redhat.io/ubi8
+FROM registry.access.redhat.com/ubi8/ubi
 
 COPY fleetkick.sh /usr/local/bin/
 #COPY kickstart-stage.ks .

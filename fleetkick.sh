@@ -102,12 +102,14 @@ edit_bootconfig() {
 
     [[ -e $CONFIG ]] && file $CONFIG || fatal_error 1 "Boot config $CONFIG file does not exist"
 
+    # Add inst.stage2 if missing (see https://bugzilla.redhat.com/show_bug.cgi?id=2152192)
+    sed -i "/rescue/n;/inst.stage2/n;/LABEL=${VOLID}/ s/$/ inst.stage2=hd:LABEL=${VOLID}/g" $CONFIG
     # Remove an existing inst.ks instruction
     sed -i "/rescue/n;/LABEL=${VOLID}/ s/\<inst.ks[^ ]*//g" $CONFIG
     # Replace an existing inst.ks instruction (redundant)
-    sed -i "/rescue/n;/LABEL=${VOLID}/ s/\<inst.ks[^ ]*/inst.ks=hd:LABEL=${VOLID}:\/${KICKFILE} None/g" $CONFIG
+    sed -i "/rescue/n;/LABEL=${VOLID}/ s/\<inst.ks[^ ]*/inst.ks=hd:LABEL=${VOLID}:\/${KICKFILE}/g" $CONFIG
     # Inject an inst.ks instruction
-    sed -i "/inst.ks=/n;/rescue/n;/LABEL=${VOLID}/ s/$/ inst.ks=hd:LABEL=${VOLID}:\/${KICKFILE} None/g" $CONFIG
+    sed -i "/inst.ks=/n;/rescue/n;/LABEL=${VOLID}/ s/$/ inst.ks=hd:LABEL=${VOLID}:\/${KICKFILE}/g" $CONFIG
     grep $VOLID $CONFIG
 }
 
